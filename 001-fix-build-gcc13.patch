@@ -1,0 +1,10 @@
+--- a/src/vulkan/overlay.cpp	2025-03-12 15:17:57.279192359 -0400
++++ b/src/vulkan/overlay.cpp	2025-03-12 13:51:21.255877672 -0400
+@@ -25,6 +25,7 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <assert.h>
++#include <cstdio>
+ 
+ #include <mutex>
+ #include <map>
