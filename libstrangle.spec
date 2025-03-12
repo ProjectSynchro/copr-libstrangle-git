@@ -1,7 +1,7 @@
-%global commit abc123def4567890abcdef1234567890abcdef12
+%global commit 0273e318e3b0cc759155db8729ad74266b74cb9b
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global git_date 20231014
-%global tag 1.0.0
+%global git_date 20220222
+%global tag 0.1.1
 
 Name:           libstrangle
 Version:        %{tag}
