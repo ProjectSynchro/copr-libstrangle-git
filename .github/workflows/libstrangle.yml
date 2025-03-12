@@ -1,0 +1,54 @@
+name: Update libstrangle
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  update-libstrangle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Get Latest Commit
+        id: get-commit
+        run: |
+          latest_commit=$(curl -s "https://gitlab.com/api/v4/projects/torkel104%2Flibstrangle/repository/commits?ref_name=master" | jq -r '.[0].id')
+          git_date=$(curl -s "https://gitlab.com/api/v4/projects/torkel104%2Flibstrangle/repository/commits?ref_name=master" | jq -r '.[0].committed_date' | sed 's/[-:]//g' | cut -c1-8)
+          latest_tag=$(curl -s "https://gitlab.com/api/v4/projects/torkel104%2Flibstrangle/repository/tags" | jq -r '.[0].name')
+          echo "latest-commit=$latest_commit" >> $GITHUB_OUTPUT
+          echo "git-date=$git_date" >> $GITHUB_OUTPUT
+          echo "latest-tag=$latest_tag" >> $GITHUB_OUTPUT
+
+      - name: Get Current Commit
+        id: get-current-commit
+        run: |
+          current_commit=$(grep -oP '(?<=^%global commit ).*' libstrangle.spec)
+          echo "current-commit=$current_commit" >> $GITHUB_OUTPUT
+
+      - name: Compare Commits
+        id: compare-commits
+        run: |
+          if [ "${{ steps.get-commit.outputs.latest-commit }}" != "${{ steps.get-current-commit.outputs.current-commit }}" ]; then
+            echo "new-commit='true'" >> $GITHUB_OUTPUT
+          else
+            echo "new-commit='false'" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Update Spec File
+        if: ${{ contains(steps.compare-commits.outputs.new-commit, 'true') }}
+        run: |
+          sed -i "s/%global commit .*/%global commit ${{ steps.get-commit.outputs.latest-commit }}/g" libstrangle.spec
+          sed -i "s/%global git_date .*/%global git_date ${{ steps.get-commit.outputs.git-date }}/g" libstrangle.spec
+          sed -i "s/%global tag .*/%global tag ${{ steps.get-commit.outputs.latest-tag }}/g" libstrangle.spec
+          
+      - name: Commit and Push Changes
+        if: ${{ contains(steps.compare-commits.outputs.new-commit, 'true') }}
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add libstrangle.spec
+          git commit -m "[libstrangle] Update commit to ${{ steps.get-commit.outputs.latest-commit }}"
+          git push
