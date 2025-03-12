@@ -30,12 +30,13 @@ To build this package locally using `fedpkg`, follow these steps:
 
 2. **Install Dependencies**:
     ```sh
-    sudo dnf install fedpkg
+    sudo dnf install fedpkg rpmdevtools
     sudo dnf builddep libstrangle.spec
     ```
 
 3. **Build the Package**:
     ```sh
+    spectool -g libstrangle.spec
     fedpkg local
     ```
 
