@@ -31,7 +31,11 @@ To build this package locally using `fedpkg`, follow these steps:
 2. **Install Dependencies**:
     ```sh
     sudo dnf install fedpkg rpmdevtools
-    sudo dnf builddep libstrangle.spec
+    sudo dnf install gcc gcc-c++ glibc-devel 
+    ```
+    - If you want to use this with 32bit x86 games also install
+    ```sh
+    sudo dnf install glibc-devel.i686 libgcc.i686 libstdc++-devel.i686
     ```
 
 3. **Build the Package**:
@@ -39,7 +43,11 @@ To build this package locally using `fedpkg`, follow these steps:
     spectool -g libstrangle.spec
     fedpkg local
     ```
+    - If you want to build a 32bit package:
+    ```sh
+    fedpkg local --arch i686
+    ```
 
-This will create the RPM packages in the `~/rpmbuild/RPMS/` directory.
+This will create the RPM packages under a folder named by whatever arch you are building for in the current directory.
 
 For more information on using `fedpkg`, refer to the [Fedora Packaging Guidelines](https://docs.fedoraproject.org/en-US/packaging-guidelines/).
