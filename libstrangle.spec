@@ -16,14 +16,10 @@ Source0:        %{url}/-/archive/%{commit}/libstrangle-%{commit}.tar.gz
 
 Patch0:         001-fix-build-gcc13.patch
 
-%if 0%{?fedora}
 BuildRequires: gcc
 BuildRequires: gcc-c++
-%endif
-%if 0%{?is_opensuse}
-BuildRequires: gcc
-BuildRequires: gcc-c++
-%endif
+BuildRequires: pkgconfig(gl)
+BuildRequires: pkgconfig(x11)
 
 Requires: vulkan-loader
 Requires: libstrangle-libs = %{version}-%{release}
