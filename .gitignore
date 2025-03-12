@@ -4,4 +4,5 @@ aarch64/
 i686/
 
 .build*
+*.tar.gz
 *.rpm
