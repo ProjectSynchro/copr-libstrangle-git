@@ -44,11 +44,6 @@ install -m 0755 -D -T %{_builddir}/libstrangle-%{commit}/src/strangle.sh %{build
 install -m 0755 -D -T %{_builddir}/libstrangle-%{commit}/src/stranglevk.sh %{buildroot}%{_bindir}/stranglevk
 install -m 0644 -D -T %{_builddir}/libstrangle-%{commit}/src/vulkan/libstrangle_vk.json %{buildroot}%{_datadir}/vulkan/implicit_layer.d/libstrangle_vk.json
 
-# Install license and docs files from source tree root
-mkdir -p %{buildroot}%{_docdir}/libstrangle
-install -m 0644 -D %{_builddir}/libstrangle-%{commit}/COPYING %{buildroot}%{_datarootdir}/licenses/libstrangle/COPYING
-install -m 0644 -D %{_builddir}/libstrangle-%{commit}/README.md %{buildroot}%{_docdir}/libstrangle/README.md
-
 # Install native target files
 install -m 0755 -D -T %{_builddir}/libstrangle-%{commit}/build/libstrangle_native.so %{buildroot}%{_libdir}/libstrangle/libstrangle.so
 install -m 0755 -D -T %{_builddir}/libstrangle-%{commit}/build/libstrangle_native_nodlsym.so %{buildroot}%{_libdir}/libstrangle/libstrangle_nodlsym.so
@@ -59,8 +54,8 @@ install -m 0644 -D -T %{_builddir}/libstrangle-%{commit}/libstrangle-%{_lib}.con
 %postun -p %{_sbindir}/ldconfig
 
 %files
-%license libstrangle/COPYING
-%doc libstrangle/README.md
+%license COPYING
+%doc README.md
 %{_bindir}/strangle
 %{_bindir}/stranglevk
 %{_datadir}/vulkan/implicit_layer.d/libstrangle_vk.json
