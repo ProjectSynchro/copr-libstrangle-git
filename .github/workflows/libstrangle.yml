@@ -50,5 +50,5 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add libstrangle.spec
-          git commit -m "[libstrangle] Update commit to ${{ steps.get-commit.outputs.latest-commit }}"
+          git commit -m "libstrangle.spec: Update commit to ${{ steps.get-commit.outputs.latest-commit }}"
           git push
