@@ -29,7 +29,7 @@ Requires: vulkan-loader
 Requires: libstrangle-libs = %{version}-%{release}
 
 %ifarch x86_64
-Recommends: libstrangle-libs = %{version}-%{release}(x86-32)
+Recommends: libstrangle-libs(x86-32) = %{version}-%{release}
 %endif
 
 %description
