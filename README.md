@@ -1,3 +1,6 @@
+> ⚠️ **Notice:**  
+> This project has migrated to **[Codeberg](https://codeberg.org/Synchro/copr-libstrangle-git)**.  
+
 Copr repository for git builds of libstrangle, commits are fetched every hour.
 
 The packages in this repo should work on Fedora 39 and Fedora 40+.
